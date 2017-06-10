@@ -1,15 +1,21 @@
 "use strict";
 
+const ACCOUNT_INFO_PLACE = './account.key'
+const fs = require('fs');
+let info = fs.readFileSync(ACCOUNT_INFO_PLACE, 'utf8').split(/\n/);
 const Nightmare = require('nightmare');
 const nightmare = Nightmare({ show: false });
+const url = 'https://www.amazon.co.jp/ap/signin?_encoding=UTF8&openid.assoc_handle=jpflex&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fhelp%2Fcustomer%2Fdisplay.html%3FnodeId%3D201945460%26ref_%3Dnav_signin'
 
 nightmare
-  .goto('https://duckduckgo.com')
-  .type('#search_form_input_homepage', 'github nightmare')
-  .click('#search_button_homepage')
-  .wait('#zero_click_wrapper .c-info__title a')
+  .goto(url)
+  .type('#ap_email',    info[0])
+  .type('#ap_password', info[1])
+  .click('#signInSubmit')
+  .wait('#nav-link-yourAccount')
   .evaluate(function () {
-    return document.querySelector('#zero_click_wrapper .c-info__title a').href;
+    return document.getElementById('nav-link-yourAccount').getElementsByClassName('nav-line-1')[0];
+    //return document.getElementById('#nav-link-yourAccount').getElementsByClassName('nav-line-1')[0];
   })
   .end()
   .then(function (result) {
