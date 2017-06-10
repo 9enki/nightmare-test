@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ikneg/nightmare-test/issues"
   },
-  "homepage": "https://github.com/ikneg/nightmare-test#readme"
+  "homepage": "https://github.com/ikneg/nightmare-test#readme",
+  "dependencies": {
+    "nightmare": "^2.10.0"
+  }
 }
