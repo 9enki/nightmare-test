@@ -1,6 +1,9 @@
 "use strict";
 
-const ACCOUNT_INFO_PLACE = './account.key'
+const ACCOUNT_INFO_PLACE  = './account.key';
+const LOCATION_SCREENSHOT = '/vagrant/';
+const SEARCH_PRODUCT_NAME = '南アルプスの天然水'
+
 const fs = require('fs');
 let info = fs.readFileSync(ACCOUNT_INFO_PLACE, 'utf8').split(/\n/);
 const Nightmare = require('nightmare');
@@ -12,10 +15,13 @@ nightmare
   .type('#ap_email',    info[0])
   .type('#ap_password', info[1])
   .click('#signInSubmit')
-  .wait('#nav-link-yourAccount')
+  .wait('#twotabsearchtextbox')
+  .type('#twotabsearchtextbox', SEARCH_PRODUCT_NAME)
+  .click('#nav-search > form > div.nav-right > div > input')
+  .wait('#result_0')
+  .screenshot(LOCATION_SCREENSHOT + ((new Date()).toLocaleDateString().replace(/\//g,'_'))+ '.png')
   .evaluate(function () {
-    return document.getElementById('nav-link-yourAccount').getElementsByClassName('nav-line-1')[0];
-    //return document.getElementById('#nav-link-yourAccount').getElementsByClassName('nav-line-1')[0];
+    return document.location.href;
   })
   .end()
   .then(function (result) {
