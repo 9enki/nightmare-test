@@ -7,22 +7,24 @@ const url = 'http://yahoo.co.jp'
 nightmare
   .goto(url)
   .wait('#btn_connect > a')
-  .screenshot('/vagrant/1.png')
   .click('#btn_connect > a')
   .wait('#btnSubmit')
-  .screenshot('/vagrant/2.png')
   .click('#btnSubmit')
-  .wait(3000)
-  .screenshot('/vagrant/3.png')
-  .evaluate(function () {
+  .evaluate(() => {
     return document.location.href;
   })
   .end()
-  .then(function (result) {
-      return result;
+  .then((url) => {
+    if (url == 'http://www.wifi-cloud.jp/redirect/alert_2020shinagawa/connected.html') {
+      console.log('success');
+    }
+    else {
+      console.log('fail');
+      console.log(url);
+    }
   })
-  .catch(function (error) {
-    nightmare.screenshot('/vagrant/4.png')
+  .catch((error) => {
+    nightmare.screenshot('/vagrant/error.png')
     console.error('Search failed:', error);
   });
 

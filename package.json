@@ -18,6 +18,8 @@
   "homepage": "https://github.com/ikneg/nightmare-test#readme",
   "dependencies": {
     "async": "^2.4.1",
-    "nightmare": "^2.10.0"
+    "nightmare": "^2.10.0",
+    "promise": "^8.0.0",
+    "vo": "^4.0.2"
   }
 }

@@ -10,11 +10,11 @@ nightmare
   .click('#button_next_page')
   .wait('#button_accept')
   .click('#button_accept')
-  .evaluate(function () {
+  .evaluate(() => {
     return document.location.href;
   })
   .end()
-  .then(function (url) {
+  .then((url) => {
     if (url == 'http://www.starbucks.co.jp/') {
       console.log('success');
     }
@@ -23,7 +23,7 @@ nightmare
       console.log(url);
     }
   })
-  .catch(function (error) {
+  .catch((error) => {
     nightmare.screenshot('/vagrant/error.png')
     console.error('Search failed:', error);
   });
